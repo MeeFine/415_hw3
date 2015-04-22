@@ -15,25 +15,28 @@ if sys.argv==[''] or len(sys.argv)<2:
 else:
     import importlib
     Problem = importlib.import_module(sys.argv[1])
+    heu = sys.argv[2]
+    sort = getattr(Problem, heu)
+    puzzle = sys.argv[3]
 
 
-print("\nWelcome to ItrBreadthFS")
+print("\nWelcome to AStar")
 COUNT = None
 BACKLINKS = {}
 
 
-def runBFS():
-    initial_state = Problem.CREATE_INITIAL_STATE()
+def runAStar():
+    initial_state = puzzle.CREATE_INITIAL_STATE()
     print("Initial State:")
     print(Problem.DESCRIBE_STATE(initial_state))
     global COUNT, BACKLINKS
     COUNT = 0
     BACKLINKS = {}
-    IterativeBFS(initial_state)
+    IterativeAStar(initial_state)
     print(str(COUNT)+" states examined.")
 
 
-def IterativeBFS(initial_state):
+def IterativeAStar(initial_state):
     global COUNT, BACKLINKS
 
     OPEN = [initial_state]
@@ -75,7 +78,8 @@ def IterativeBFS(initial_state):
                 if Problem.DEEP_EQUALS(s2, OPEN[i]):
                     del OPEN[i]; break
 
-        OPEN = OPEN + L
+        OPEN = L + OPEN
+        sorted(OPEN, key=sort(OPEN))
 
 
 def backtrace(S):
@@ -98,5 +102,4 @@ def occurs_in(s1, lst):
     return False
 
 if __name__ == '__main__':
-    runBFS()
-
+    runAStar()
