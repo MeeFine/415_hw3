@@ -1,12 +1,7 @@
-# ItrDFS.py
-# Ver 0.2, April 15, 2015.
-# Iterative Depth-First Search of a problem space.
-# The Problem should be given in a separate Python
-# file using the "QUIET" file format.
-# See the TowersOfHanoi.py example file for details.
-# Examples of Usage:
-# python3 ItrDFS.py TowersOfHanoi
-# python3 ItrDFS.py EightPuzzle
+"""PartII.py
+Ziming Guo, CSE 415, Spring 2015, University of Wahsington
+Instructor:  S. Tanimoto.
+"""
 
 import sys
 
@@ -17,7 +12,8 @@ else:
     Problem = importlib.import_module(sys.argv[1])
     heu = sys.argv[2]
     sort = getattr(Problem, heu)
-    puzzle = sys.argv[3]
+    puzzle_name = sys.argv[3].split(".")[0]
+    puzzle = importlib.import_module(puzzle_name)
 
 
 print("\nWelcome to AStar")
@@ -42,6 +38,7 @@ def IterativeAStar(initial_state):
     OPEN = [initial_state]
     CLOSED = []
     BACKLINKS[Problem.HASHCODE(initial_state)] = -1
+    distance = {Problem.HASHCODE(initial_state): 0}
 
     while OPEN != []:
         S = OPEN[0]
@@ -70,6 +67,7 @@ def IterativeAStar(initial_state):
                 if not occurs_in(new_state, CLOSED):
                     L.append(new_state)
                     BACKLINKS[Problem.HASHCODE(new_state)] = S
+                    distance[Problem.HASHCODE(new_state)] = distance[Problem.HASHCODE(S)] + 1
                     # Uncomment for debugging:
                     # print(Problem.DESCRIBE_STATE(new_state))
 
@@ -79,7 +77,7 @@ def IterativeAStar(initial_state):
                     del OPEN[i]; break
 
         OPEN = L + OPEN
-        sorted(OPEN, key=sort(OPEN))
+        OPEN = sorted(OPEN, key=lambda state: sort(state) + distance[Problem.HASHCODE(state)])
 
 
 def backtrace(S):

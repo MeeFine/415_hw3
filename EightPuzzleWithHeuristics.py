@@ -1,12 +1,18 @@
 
+"""PartII.py
+Ziming Guo, CSE 415, Spring 2015, University of Wahsington
+Instructor:  S. Tanimoto.
+"""
+from math import sqrt
 # <METADATA>
 QUIET_VERSION = "0.1"
-PROBLEM_NAME = "BasicEightPuzzle"
+PROBLEM_NAME = "BasicEightPuzzleWithHeuristics"
 PROBLEM_VERSION = "0.1"
 PROBLEM_AUTHORS = ['Z. Guo']
 PROBLEM_CREATION_DATE = "21-APR-2015"
 PROBLEM_DESC= \
     '''
+    Basic 8 puzzle with heuristics functiuons.
     '''
 # </METADATA>
 
@@ -88,15 +94,21 @@ class Operator:
 
 def h_euclidean(s):
     result = 0
-    goal = CREATE_INITIAL_STATE
+    goal = GOAL_STATE
     for i in s:
-        result += abs(s.index(i) - goal.index(i))
+        index = s.index(i)
+        g_index = goal.index(i)
+        row = index / 3
+        col = index % 3
+        g_row = g_index / 3
+        g_col = g_index % 3
+        result += sqrt(pow(g_row - row, 2) + pow(g_col - col, 2))
     return result
 
 
 def h_hamming(s):
     result = 0
-    goal = CREATE_INITIAL_STATE
+    goal = GOAL_STATE
     for i in s:
         index = s.index(i)
         if goal[index] != i:
@@ -106,7 +118,7 @@ def h_hamming(s):
 
 def h_manhattan(s):
     result = 0
-    goal = CREATE_INITIAL_STATE
+    goal = GOAL_STATE
     for i in s:
         index = s.index(i)
         g_index = goal.index(i)
@@ -119,15 +131,12 @@ def h_manhattan(s):
 
 # </COMMON_CODE>
 
-# <INITIAL_STATE>
-# INITIAL_STATE = {'peg1': list(range(N_disks,0,-1)), 'peg2':[], 'peg3':[] }
-# CREATE_INITIAL_STATE = lambda: [3, 1, 2, 4, 0, 5, 6, 7, 8]
-# DUMMY_STATE =  {'peg1':[], 'peg2':[], 'peg3':[] }
-# </INITIAL_STATE>
+GOAL_STATE = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
 # <GOAL_TEST> (optional)
 GOAL_TEST = lambda s: goal_test(s)
 # </GOAL_TEST>
+
 #  <GOAL_MESSAGE_FUNCTION> (optional)
 GOAL_MESSAGE_FUNCTION = lambda s: goal_message(s)
 # </GOAL_MESSAGE_FUNCTION>

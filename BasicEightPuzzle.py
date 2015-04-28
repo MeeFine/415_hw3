@@ -1,3 +1,7 @@
+"""PartII.py
+Ziming Guo, CSE 415, Spring 2015, University of Wahsington
+Instructor:  S. Tanimoto.
+"""
 # <METADATA>
 QUIET_VERSION = "0.1"
 PROBLEM_NAME = "BasicEightPuzzle"

@@ -1,12 +1,7 @@
-# ItrDFS.py
-# Ver 0.2, April 15, 2015.
-# Iterative Depth-First Search of a problem space.
-# The Problem should be given in a separate Python
-# file using the "QUIET" file format.
-# See the TowersOfHanoi.py example file for details.
-# Examples of Usage:
-# python3 ItrDFS.py TowersOfHanoi
-# python3 ItrDFS.py EightPuzzle
+"""PartII.py
+Ziming Guo, CSE 415, Spring 2015, University of Wahsington
+Instructor:  S. Tanimoto.
+"""
 
 import sys
 
