@@ -1,0 +1,2 @@
+# exclue the puzzle intial states file
+puzzle*.py
